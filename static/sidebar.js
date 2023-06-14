@@ -77,7 +77,7 @@ function updateQueueItemDom(queueItem) {
 function getAudioItemTemplate() {
     return loadTemplate(
         '.audio-item',
-        ['.audio-item__title', '.audio-item__timestamp', '.audio-item__duration', '.audio-item__newtag'],
+        ['.audio-item__title', '.audio-item__timestamp', '.audio-item__duration'],
         true
     );
 }
@@ -85,11 +85,11 @@ function getAudioItemTemplate() {
 function createAudioItemDom(file, { append = true, isNew = false } = {}) {
     const template = getAudioItemTemplate();
     template?.create(
-        ({ root, selectedElements: [title, timestamp, duration, newtag] }) => {
+        ({ root, selectedElements: [title, timestamp, duration] }) => {
             root.id = 'audio-item-' + file.text;
             root.title = file.text;
             $(root).data('file', file);
-            toggleElementDisplay(newtag, isNew);
+            root.classList.toggle('new', isNew);
 
             //bind display values
 
@@ -115,7 +115,7 @@ function createAudioItemDom(file, { append = true, isNew = false } = {}) {
                 root,
                 '/static/audio/' + file.audio_file,
                 () => {
-                    toggleElementDisplay(newtag, false);
+                    root.classList.toggle('new', false);
                     root.classList.toggle('selected', true);
                 },
                 () => {

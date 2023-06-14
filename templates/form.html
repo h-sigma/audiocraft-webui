@@ -25,6 +25,30 @@
                 pointer-events: all;
                 cursor: pointer;
             }
+            
+            @keyframes append-animate {
+                from {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+                to {
+                    transform: scale(1);
+                    opacity: 1;	
+                }
+            }
+
+            /* animate new box */
+            .queue-item, .audio-item.new {
+                animation: append-animate .3s linear;
+            }
+
+            .audio-item .audio-item__newtag {
+                display: none;
+            }
+
+            .audio-item.new .audio-item__newtag {
+                display: inline;
+            }
         </style>
     </head>
     <body>
@@ -79,8 +103,8 @@
                 <div class="col-2 p-2 mh-100 flex flex-column">
                     <h3 class="ms-1">Results</h3>
                     <!-- Scrollable flex container hax -->
-                    <div class="flex flex-column flex-items-stretch flex-1 overflow-auto" style="max-height: calc(100% - 50px)">
-                        <div class="d-flex flex-column flex-items-stretch flex-grow-0 flex-shrink-0 gap-1">
+                    <div class="flex flex-column flex-items-stretch flex-1 overflow-auto gap-1" style="max-height: calc(100% - 50px)">
+                        <div class="d-flex flex-column flex-items-stretch flex-grow-0 flex-shrink-0 gap-1 pb-2">
                             <!-- Queue Item Template -->
                             <div class="queue-item d-flex d-none flex-column flex-items-stretch rounded p-1 me-2 position-relative">
                                 <h6 class="queue-item__title">My Long Queue Prompt With Random Words And All That Nonsense.mp3</h6>
