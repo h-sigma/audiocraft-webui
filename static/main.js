@@ -95,7 +95,7 @@ $(document).ready(function () {
         })
             .then(() => {
                 handleQueueProgress({ segments: formData.get('segments'), id: formData.get('id'), prompt: formData.get('text') });
-                document.getElementById('prompt-input').value = '';
+                //document.getElementById('prompt-input').value = '';
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);
