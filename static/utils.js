@@ -10,6 +10,7 @@ function isElementDisplayed(el) {
     }
     return !el.classList.contains('d-none');
 }
+
 function toggleElementDisplay(el, display) {
     if (typeof el === 'string') {
         el = document.querySelector(el);
@@ -25,6 +26,17 @@ function toggleElementDisplay(el, display) {
     }
 }
 
+function collapseElement(element, show) {
+    const collapse = bootstrap.Collapse.getOrCreateInstance(element, {
+        toggle: false
+    });
+    if(show) {
+        collapse.show();
+    } else {
+        collapse.hide();
+    }
+}
+
 function loadTemplate(rootSelector, selectors = [], strict = false) {
     const root = document.querySelector(rootSelector);
     if (root == null) {
@@ -34,9 +46,7 @@ function loadTemplate(rootSelector, selectors = [], strict = false) {
     toggleElementDisplay(root, false);
     const selectedElements = selectors.map((selector) => root.querySelector(selector));
     if (strict && selectedElements.some((el) => el == null)) {
-        const failed = selectedElements
-            .map((item, index) => (item == null ? selectors[index] : undefined))
-            .filter((item) => item != null);
+        const failed = selectedElements.map((item, index) => (item == null ? selectors[index] : undefined)).filter((item) => item != null);
         console.error(`Template could not fulfill selector queries: ${failed.join(' , ')}. Check your html.`);
         return undefined;
     }
@@ -69,8 +79,8 @@ function loadTemplate(rootSelector, selectors = [], strict = false) {
 
 function findOrCreateTemplateInstance(instanceSelector, templateSelector, selectors = [], strict = false) {
     const instance = document.querySelector(instanceSelector);
-    if(instance != null) {
-        return (findCallback, {append = false} = {}) => {
+    if (instance != null) {
+        return (findCallback, { append = false } = {}) => {
             findCallback({
                 root: instance,
                 selectedElements: selectors.map((selector) => instance.querySelector(selector)),
@@ -88,12 +98,28 @@ function minDigits(num, digits) {
         str = '0' + str;
     }
     return str;
-};
+}
+
+/**
+ * Returns audio extension without leading dot.
+ */
+function audioExtension(filename) {
+    if (typeof filename !== 'string') {
+        return '';
+    }
+    for (const extn of ['mp3', 'wav', 'aac', 'alac', 'flac', 'm4a', 'ogg', 'webm']) {
+        if (filename.endsWith('.' + extn)) {
+            return extn;
+        }
+    }
+    return '';
+}
+
 function secondsToDuration(seconds, hourAlways = false) {
     seconds = Math.ceil(seconds);
     const hours = Math.floor(seconds / (60 * 60));
-    const minutes = Math.floor(((seconds % (60 * 60))) / 60);
-    if(hours > 0 || hourAlways) {
+    const minutes = Math.floor((seconds % (60 * 60)) / 60);
+    if (hours > 0 || hourAlways) {
         return `${minDigits(hours, 2)}:${minDigits(minutes, 2)}:${minDigits(seconds, 2)}`;
     }
     return `${minDigits(minutes, 2)}:${minDigits(seconds, 2)}`;

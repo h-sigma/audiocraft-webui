@@ -92,7 +92,7 @@
                         <div class="d-flex flex-column flex-items-stretch flex-grow-0 flex-shrink-0 gap-1">
                             <!-- Audio Item Template -->
                             <div class="audio-item d-none d-flex justify-content-between rounded p-1 me-2 position-relative">
-                                <div class="d-flex flex-column flex-items-stretch">
+                                <div class="d-flex flex-column flex-grow-1 flex-items-stretch me-2">
                                     <h6>
                                         <span class="audio-item__title">My Long File Name With Random Words And All That Nonsense.mp3</span>
                                         <span class="audio-item__newtag badge bg-success">New</span>
@@ -101,23 +101,25 @@
                                         <span class="audio-item__timestamp text-muted">23/2/22 at 3:23pm</span>
                                         <span class="audio-item__duration text-muted">00:32</span>
                                     </div>
-                                    <div class="playback audio-item__seek d-flex flex-column align-items-center">
-                                        <input
-                                            class="form-range flex-grow-1"
-                                            type="range"
-                                            id="seek"
-                                            name="seek"
-                                            min="0"
-                                            max="0"
-                                            value="0"
-                                            step="0.1"
-                                        />
-                                        <label class=""></label>
+                                    <div class="playback collapse audio-item__seek ">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <input
+                                                class="form-range flex-grow-1"
+                                                type="range"
+                                                id="seek"
+                                                name="seek"
+                                                min="0"
+                                                max="0"
+                                                value="0"
+                                                step="0.1"
+                                            />
+                                            <label class="00:00 / 00:00"></label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <span class="play-btn icon-btn">{{ render_icon('play-fill', '2em') }}</span>
-                                    <span class="pause-btn icon-btn">{{ render_icon('pause-fill', '2em') }}</span>
+                                    <span class="play-btn icon-btn">{{ render_icon('play-circle-fill', '2em') }}</span>
+                                    <span class="pause-btn icon-btn">{{ render_icon('pause-circle-fill', '2em') }}</span>
                                     <span class="restart-btn icon-btn">{{ render_icon('arrow-counterclockwise', '2em') }}</span>
                                     <span class="error-btn text-warning"> {{ render_icon('exclamation-triangle-fill', '2em') }} </span>
                                 </div>

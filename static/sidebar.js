@@ -86,14 +86,19 @@ function createAudioItemDom(file, { append = true, isNew = false } = {}) {
     const template = getAudioItemTemplate();
     template?.create(
         ({ root, selectedElements: [title, timestamp, duration, newtag] }) => {
-            root.id = 'audio-item-' + title;
+            root.id = 'audio-item-' + file.text;
+            root.title = file.text;
             $(root).data('file', file);
             toggleElementDisplay(newtag, isNew);
 
             //bind display values
-            title.innerText = file.text;
+
+            const extn = audioExtension(file.text);
+            const filename = file.text.substring(0, file.text.length - extn.length - 1);
+            title.innerText = filename.substring(0, 50) + (filename.length > 50 ? '...' : '');
+
             let dt = new Date();
-            if(file.timestamp) {
+            if (file.timestamp) {
                 dt = new Date(0);
                 dt.setUTCSeconds(file.timestamp);
             }

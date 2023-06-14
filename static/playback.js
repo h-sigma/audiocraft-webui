@@ -45,7 +45,7 @@ function preparePlayback(rootNode, audioSource, playingChangeCb, stopCb) {
         }
     });
 
-    const isPlaybackShown = () => isElementDisplayed(playbackElement);
+    const isPlaybackShown = () => playbackElement.classList.contains('open');
 
     const enableBtn = (btn) => {
         toggleElementDisplay(playElement, btn === 'play');
@@ -59,12 +59,12 @@ function preparePlayback(rootNode, audioSource, playingChangeCb, stopCb) {
             enableBtn(playing ? 'pause' : 'play');
             if (playing) {
                 //if now playing, enable playback area
-                toggleElementDisplay(playbackElement, true);
+                collapseElement(playbackElement, true);
             }
         }
 
         if (show !== undefined) {
-            toggleElementDisplay(playbackElement, show);
+            collapseElement(playbackElement, show);
         }
 
         if (time !== undefined || duration !== undefined) {
@@ -72,8 +72,7 @@ function preparePlayback(rootNode, audioSource, playingChangeCb, stopCb) {
             seekInputElement.min = 0;
             seekInputElement.max = invalid ? 0 : duration;
             seekInputElement.value = invalid ? 0 : time;
-            seekLabelElement.innerText = invalid ? '' : secondsToDuration(time) + ' / ' + secondsToDuration(duration);
-            toggleElementDisplay(seekInputElement, !invalid);
+            seekLabelElement.innerText = invalid ? '00:00 / 00:00' : secondsToDuration(time) + ' / ' + secondsToDuration(duration);
         }
 
         if (ended === true) {
